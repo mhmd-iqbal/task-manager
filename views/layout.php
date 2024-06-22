@@ -7,7 +7,7 @@
 </head>
 
 <body>
-    <?= $content; ?>
+    <?= isset($content) ?? $content; ?>
 </body>
 
 </html>
