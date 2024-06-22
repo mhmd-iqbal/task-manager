@@ -26,59 +26,53 @@ $search = isset($_GET['search']) ?  $_GET['search'] : '';
             </form>
 
             <div class="table-responsive w-100">
-                <table class="table table-sm">
+                <table class="table table-sm table-hover display nowrap w-100" id="tasks-table">
                     <thead>
-                        <th style="min-width: 50px;">ID</th>
-                        <th style="min-width: 350px;">Task Detail</th>
-                        <th style="min-width: 150px;">Status</th>
-                        <th style="min-width: 130px;">Action</th>
+                        <tr>
+                            <th style="min-width: 50px;">ID</th>
+                            <th style="min-width: 350px;">Task Detail</th>
+                            <th style="min-width: 150px;">Status</th>
+                            <th style="min-width: 130px;">Action</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <?php if (!empty($tasks)) : ?>
-                            <?php foreach ($tasks as $task) : ?>
-                                <tr>
-                                    <td class="py-2"><?= $task['id'] ?></td>
-                                    <td class="py-2">
-                                        <strong><?= htmlspecialchars($task['title']); ?></strong>
-                                        <p class="text-lead mb-0" style="white-space:pre-line">
-                                            <?= trim($task['description']) ?>
-                                        </p>
-                                    </td>
-                                    <td class="py-2">
-                                        <?php
-                                        $badgeColor = "";
-
-                                        switch ($task['status']) {
-                                            case 'Pending':
-                                                $badgeColor = 'text-secondary';
-                                                break;
-                                            case 'In Progress':
-                                                $badgeColor = 'text-warning';
-                                                break;
-                                            default:
-                                                $badgeColor = 'text-success';
-                                                break;
-                                        }
-                                        ?>
-
-                                        <span class="fw-bold <?= $badgeColor ?>"><?= htmlspecialchars($task['status']); ?></span>
-                                    </td>
-                                    <td class="py-2">
-                                        <div class="d-flex gap-2 flex-wrap">
-                                            <a href="index.php?action=updateTaskStatus&update_status=Pending&id=<?= $task['id']; ?>" class="btn btn-sm btn-secondary"><i class="bi bi-hourglass-split"></i></a>
-                                            <a href="index.php?action=updateTaskStatus&update_status=In Progress&id=<?= $task['id']; ?>" class="btn btn-sm btn-warning"><i class="bi bi-gear"></i></a>
-                                            <a href="index.php?action=updateTaskStatus&update_status=Completed&id=<?= $task['id']; ?>" class="btn btn-sm btn-success"><i class="bi bi-check-circle"></i></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        <?php else : ?>
+                        <?php foreach ($tasks as $task) : ?>
                             <tr>
-                                <td colspan="4" class="text-center">
-                                    No tasks found.
+                                <td class="py-2"><?= $task['id'] ?></td>
+                                <td class="py-2">
+                                    <strong><?= htmlspecialchars($task['title']); ?></strong>
+                                    <p class="text-lead mb-0" style="white-space:pre-line">
+                                        <?= trim($task['description']) ?>
+                                    </p>
+                                </td>
+                                <td class="py-2">
+                                    <?php
+                                    $badgeColor = "";
+
+                                    switch ($task['status']) {
+                                        case 'Pending':
+                                            $badgeColor = 'text-secondary';
+                                            break;
+                                        case 'In Progress':
+                                            $badgeColor = 'text-warning';
+                                            break;
+                                        default:
+                                            $badgeColor = 'text-success';
+                                            break;
+                                    }
+                                    ?>
+
+                                    <span class="fw-bold <?= $badgeColor ?>"><?= htmlspecialchars($task['status']); ?></span>
+                                </td>
+                                <td class="py-2">
+                                    <div class="d-flex gap-2 flex-wrap">
+                                        <a href="index.php?action=updateTaskStatus&update_status=Pending&id=<?= $task['id']; ?>" class="btn btn-sm btn-secondary"><i class="bi bi-hourglass-split"></i></a>
+                                        <a href="index.php?action=updateTaskStatus&update_status=In Progress&id=<?= $task['id']; ?>" class="btn btn-sm btn-warning"><i class="bi bi-gear"></i></a>
+                                        <a href="index.php?action=updateTaskStatus&update_status=Completed&id=<?= $task['id']; ?>" class="btn btn-sm btn-success"><i class="bi bi-check-circle"></i></a>
+                                    </div>
                                 </td>
                             </tr>
-                        <?php endif; ?>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
