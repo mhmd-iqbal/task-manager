@@ -16,24 +16,29 @@ class Task
      */
     public function getAllTasks($search = '')
     {
-        $query = 'SELECT * FROM tasks';
-        $params = [];
+        try {
+            $query = 'SELECT * FROM tasks';
+            $params = [];
 
-        // If search keyword is provided, filter tasks by title or status
-        if ($search) {
-            $query .= ' WHERE title LIKE ? OR status = ?';
-            $params = ['%' . $search . '%', $search];
+            // If search keyword is provided, filter tasks by title or status
+            if ($search) {
+                $query .= ' WHERE title LIKE ? OR status = ?';
+                $params = ['%' . $search . '%', $search];
+            }
+
+            // Order tasks by created_at timestamp in descending order
+            $query .= ' ORDER BY created_at DESC';
+
+            // Prepare and execute the SQL query with parameters
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute($params);
+
+            // Return the fetched results as an array of tasks
+            return $stmt->fetchAll();
+        } catch (PDOException $e) {
+            // Log the error or handle it as needed
+            error_log("Error retrieving tasks: " . $e->getMessage());
         }
-
-        // Order tasks by created_at timestamp in descending order
-        $query .= ' ORDER BY created_at DESC';
-
-        // Prepare and execute the SQL query with parameters
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute($params);
-
-        // Return the fetched results as an array of tasks
-        return $stmt->fetchAll();
     }
 
     /**
@@ -44,11 +49,16 @@ class Task
      */
     public function addTask($title, $description)
     {
-        // Prepare SQL statement to insert a new task into the database
-        $stmt = $this->conn->prepare('INSERT INTO tasks (title, description) VALUES (?, ?)');
+        try {
+            // Prepare SQL statement to insert a new task into the database
+            $stmt = $this->conn->prepare('INSERT INTO tasks (title, description) VALUES (?, ?)');
 
-        // Execute the SQL statement with title and description as parameters
-        $stmt->execute([$title, $description]);
+            // Execute the SQL statement with title and description as parameters
+            $stmt->execute([$title, $description]);
+        } catch (PDOException $e) {
+            // Log the error or handle it as needed
+            error_log("Error adding task: " . $e->getMessage());
+        }
     }
 
     /**
@@ -59,10 +69,15 @@ class Task
      */
     public function updateTaskStatus($id, $status)
     {
-        // Prepare SQL statement to update the status of a task in the database
-        $stmt = $this->conn->prepare('UPDATE tasks SET status = ? WHERE id = ?');
+        try {
+            // Prepare SQL statement to update the status of a task in the database
+            $stmt = $this->conn->prepare('UPDATE tasks SET status = ? WHERE id = ?');
 
-        // Execute the SQL statement with status and ID as parameters
-        $stmt->execute([$status, $id]);
+            // Execute the SQL statement with status and ID as parameters
+            $stmt->execute([$status, $id]);
+        } catch (PDOException $e) {
+            // Log the error or handle it as needed
+            error_log("Error updating task status: " . $e->getMessage());
+        }
     }
 }
