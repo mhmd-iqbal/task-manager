@@ -31,6 +31,7 @@ window.addEventListener('resize', function () {
 
 $(document).ready(function () {
     $('#tasks-table').DataTable({
+        order: [[0, 'desc']],
         searching: false,
         responsive: {
             details: true,
@@ -48,6 +49,8 @@ $(document).ready(function () {
         "columnDefs": [{
             "targets": 3,
             "orderable": false
-        }]
+        }],
+        scrollCollapse: true,
+        scrollY: '500px'
     });
 });
