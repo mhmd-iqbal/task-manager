@@ -33,10 +33,17 @@ class TaskController
      */
     public function addTask()
     {
-        // Check if request method is POST and title/description are set
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['title']) && isset($_POST['description'])) {
-            // Add task using taskModel
-            $this->taskModel->addTask($_POST['title'], $_POST['description']);
+        // Check if title or description inputs are empty
+        if ((isset($_POST['title']) && $_POST['title'] == "") || isset($_POST['description']) && ($_POST['description'] == "")) {
+            session_start();
+            // Set session named 'message' with validation message 
+            $_SESSION['message'] = "Title or description inputs must be filled.";
+        } else {
+            // Check if request method is POST and title/description are set
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['title']) && isset($_POST['description'])) {
+                // Add task using taskModel
+                $this->taskModel->addTask($_POST['title'], $_POST['description']);
+            }
         }
 
         // Redirect back to index.php after adding task

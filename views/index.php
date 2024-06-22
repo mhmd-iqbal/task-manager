@@ -1,16 +1,28 @@
 <h1>Task Manager</h1>
 
+<?php
+session_start();
+if (isset($_SESSION['message'])) { // check if session 'message' is set
+    echo $_SESSION['message']; // display message from session 'message'
+    unset($_SESSION['message']); //unset session so that it doesn't display again
+}
+?>
+
 <form method="post" action="index.php?action=addTask">
     <label for="title">Title:</label>
-    <input type="text" id="title" name="title" required>
+    <input type="text" id="title" name="title">
     <label for="description">Description:</label>
-    <textarea id="description" name="description" required></textarea>
+    <textarea id="description" name="description"></textarea>
     <button type="submit">Add Task</button>
 </form>
 
+<?php
+$search = isset($_GET['search']) ?  $_GET['search'] : '';
+?>
+
 <form method="get" action="index.php">
     <label for="search">Search:</label>
-    <input type="text" id="search" name="search">
+    <input type="text" id="search" name="search" value="<?= $search ?>">
     <button type="submit">Search</button>
 </form>
 
