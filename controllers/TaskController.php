@@ -22,8 +22,8 @@ class TaskController
         // Get tasks from model based on search query
         $tasks = $this->taskModel->getAllTasks($search);
 
-        // Include the view file to display the tasks
-        include 'views/index.php';
+        // Render the view with tasks data
+        $this->render('views/layout.php', ['tasks' => $tasks]);
     }
 
     /**
@@ -65,5 +65,29 @@ class TaskController
 
         // Redirect back to index.php after updating task status
         header('Location: index.php');
+    }
+
+    /**
+     * Renders a view file with optional data.
+     *
+     * @param string $view The path to the view file to render.
+     * @param array $data Optional data to pass to the view.
+     */
+    private function render($view, $data = [])
+    {
+        // Extract the data array to variables accessible within the view
+        extract($data);
+
+        // Start output buffering to capture the rendered view
+        ob_start();
+
+        // Include the view file
+        require $view;
+
+        // Get the captured output and clean the buffer
+        $content = ob_get_clean();
+
+        // Assuming you want to return the content to the caller
+        echo $content;
     }
 }

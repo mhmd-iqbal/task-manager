@@ -19,8 +19,6 @@ switch ($action) {
         break;
     default: // $action = 'index'
         // Invoke the index method in TaskController for displaying the Index Page
-        $content = $controller->index();
+        $controller->index();
         break;
 }
-
-include 'views/layout.php';
