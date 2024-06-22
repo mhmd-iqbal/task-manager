@@ -4,11 +4,16 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 if (isset($_SESSION['message'])) { // check if session 'message' is set
-    echo "<div class='alert alert-danger my-4' role='alert'>" . $_SESSION['message'] . "</div>"; // display message from session 'message'
+    echo "<div class='alert alert-danger alert-dismissible my-4' role='alert' style='max-width: fit-content;'>" . $_SESSION['message'] . "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>"; // display message from session 'message'
     unset($_SESSION['message']); //unset session so that it doesn't display again
 
     $oldTitle = $_SESSION['old']['title'];
     $oldDescription = $_SESSION['old']['description'];
+}
+
+if (isset($_SESSION['success'])) { // check if session 'success' is set
+    echo "<div class='alert alert-success alert-dismissible my-4' role='alert' style='max-width: fit-content;'>" . $_SESSION['success'] . "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>"; // display success from session 'success'
+    unset($_SESSION['success']); //unset session so that it doesn't display agai
 }
 
 $search = isset($_GET['search']) ?  $_GET['search'] : '';

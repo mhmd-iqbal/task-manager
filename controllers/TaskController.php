@@ -34,9 +34,9 @@ class TaskController
     public function addTask()
     {
         try {
+            session_start();
             // Check if title or description inputs are empty
             if ((isset($_POST['title']) && $_POST['title'] == "") || isset($_POST['description']) && ($_POST['description'] == "")) {
-                session_start();
                 // Set session named 'message' with validation message 
                 $_SESSION['message'] = "Title and description inputs must be filled.";
                 $_SESSION['old'] = [
@@ -48,6 +48,9 @@ class TaskController
                 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['title']) && isset($_POST['description'])) {
                     // Add task using taskModel
                     $this->taskModel->addTask($_POST['title'], $_POST['description']);
+
+                    // Set session named 'success' with success message 
+                    $_SESSION['success'] = "Task successfully added";
                 }
             }
 
@@ -67,10 +70,14 @@ class TaskController
     public function updateTaskStatus()
     {
         try {
+            session_start();
             // Check if update_status and id parameters are set in GET
             if (isset($_GET['update_status']) && isset($_GET['id'])) {
                 // Update task status using taskModel
                 $this->taskModel->updateTaskStatus($_GET['id'], $_GET['update_status']);
+
+                // Set session named 'success' with success message 
+                $_SESSION['success'] = "Task status successfully updated";
             }
 
             // Redirect back to index.php after updating task status
