@@ -19,7 +19,7 @@ function base_url()
 </head>
 
 <body class="bg-body-secondary">
-    <div class="container py-4">
+    <div class="container-fluid p-4">
         <?php include_once 'partials/navbar.php' ?>
         <?php include_once 'index.php' ?>
         <?php include_once 'partials/footer.php' ?>
