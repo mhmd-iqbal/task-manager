@@ -34,23 +34,23 @@ $search = isset($_GET['search']) ?  $_GET['search'] : '';
                 <table class="table table-sm table-hover display nowrap w-100" id="tasks-table">
                     <thead>
                         <tr>
-                            <th style="min-width: 50px;">ID</th>
+                            <th style="min-width: 50px;" class="text-center">ID</th>
                             <th style="min-width: 350px;">Task Detail</th>
-                            <th style="min-width: 150px;">Status</th>
-                            <th style="min-width: 130px;">Action</th>
+                            <th style="min-width: 150px;" class="text-center">Status</th>
+                            <th style="min-width: 130px;" class="text-center">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($tasks as $task) : ?>
                             <tr>
-                                <td class="py-2"><?= $task['id'] ?></td>
+                                <td class="py-2 text-center"><?= $task['id'] ?></td>
                                 <td class="py-2">
                                     <strong><?= htmlspecialchars($task['title']); ?></strong>
                                     <p class="text-lead mb-0" style="white-space:pre-line">
                                         <?= trim($task['description']) ?>
                                     </p>
                                 </td>
-                                <td class="py-2">
+                                <td class="py-2 text-center">
                                     <?php
                                     $badgeColor = "";
 
@@ -70,7 +70,7 @@ $search = isset($_GET['search']) ?  $_GET['search'] : '';
                                     <span class="fw-bold <?= $badgeColor ?>"><?= htmlspecialchars($task['status']); ?></span>
                                 </td>
                                 <td class="py-2">
-                                    <div class="d-flex gap-2 flex-wrap">
+                                    <div class="d-flex gap-2 flex-wrap justify-content-center">
                                         <a href="index.php?action=updateTaskStatus&update_status=Pending&id=<?= $task['id']; ?>" class="btn btn-sm btn-secondary"><i class="bi bi-hourglass-split"></i></a>
                                         <a href="index.php?action=updateTaskStatus&update_status=In Progress&id=<?= $task['id']; ?>" class="btn btn-sm btn-warning"><i class="bi bi-gear"></i></a>
                                         <a href="index.php?action=updateTaskStatus&update_status=Completed&id=<?= $task['id']; ?>" class="btn btn-sm btn-success"><i class="bi bi-check-circle"></i></a>
