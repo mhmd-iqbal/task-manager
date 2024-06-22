@@ -37,7 +37,11 @@ class TaskController
         if ((isset($_POST['title']) && $_POST['title'] == "") || isset($_POST['description']) && ($_POST['description'] == "")) {
             session_start();
             // Set session named 'message' with validation message 
-            $_SESSION['message'] = "Title or description inputs must be filled.";
+            $_SESSION['message'] = "Title and description inputs must be filled.";
+            $_SESSION['old'] = [
+                'title' => $_POST['title'] ?? '',
+                'description' => $_POST['description'] ?? '',
+            ];
         } else {
             // Check if request method is POST and title/description are set
             if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['title']) && isset($_POST['description'])) {

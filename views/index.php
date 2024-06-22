@@ -4,8 +4,11 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 if (isset($_SESSION['message'])) { // check if session 'message' is set
-    echo $_SESSION['message']; // display message from session 'message'
+    echo "<div class='alert alert-danger my-4' role='alert'>" . $_SESSION['message'] . "</div>"; // display message from session 'message'
     unset($_SESSION['message']); //unset session so that it doesn't display again
+
+    $oldTitle = $_SESSION['old']['title'];
+    $oldDescription = $_SESSION['old']['description'];
 }
 
 $search = isset($_GET['search']) ?  $_GET['search'] : '';
@@ -93,14 +96,17 @@ $search = isset($_GET['search']) ?  $_GET['search'] : '';
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <div class="alert alert-info" role="alert">
+                    Input with <span class="text-danger">*</span> must be filled
+                </div>
                 <form method="post" action="index.php?action=addTask">
                     <div class="mb-3">
-                        <label for="title" class="form-label">Title:</label>
-                        <input type="text" id="title" name="title" class="form-control">
+                        <label for="title" class="form-label">Title <span class="text-danger">*</span></label>
+                        <input type="text" id="title" name="title" class="form-control" value="<?= $oldTitle ?? '' ?>">
                     </div>
                     <div class="mb-3">
-                        <label for="description" class="form-label">Description:</label>
-                        <textarea id="description" name="description" class="form-control" rows="3"></textarea>
+                        <label for="description" class="form-label">Description <span class="text-danger">*</span></label>
+                        <textarea id="description" name="description" class="form-control" rows="3"><?= $oldDescription ?? '' ?></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary w-100"><i class="bi bi-save me-1"></i> Save</button>
                 </form>
