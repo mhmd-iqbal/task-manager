@@ -5,6 +5,7 @@
 - PHP (version 7 or above)
 - MySQL (version 5.6 or above)
 - XAMPP (version 8 or above)
+- Internet connection
 
 ## Setup Instructions
 
