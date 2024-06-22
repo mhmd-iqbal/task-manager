@@ -23,4 +23,16 @@ class Task
         $stmt->execute($params);
         return $stmt->fetchAll();
     }
+
+    public function addTask($title, $description)
+    {
+        $stmt = $this->conn->prepare('INSERT INTO tasks (title, description) VALUES (?, ?)');
+        $stmt->execute([$title, $description]);
+    }
+
+    public function updateTaskStatus($id, $status)
+    {
+        $stmt = $this->conn->prepare('UPDATE tasks SET status = ? WHERE id = ?');
+        $stmt->execute([$status, $id]);
+    }
 }
